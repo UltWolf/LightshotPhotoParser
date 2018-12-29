@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs/LightshotPhotoParser/v15/Server/sqlite3/db.lock
+/.vs/LightshotPhotoParser/v15/Server/sqlite3
+/.vs/LightshotPhotoParser/v15/.suo
+/LightshotPhotoParser/bin/Debug
+/LightshotPhotoParser/obj/Debug
