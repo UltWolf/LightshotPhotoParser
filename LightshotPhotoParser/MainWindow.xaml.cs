@@ -64,19 +64,11 @@ namespace LightshotPhotoParser
                 for (int i = 0; i < count;)
                 {
                     Trying.Content = "Count : " + countOfTrying;
-                    Task<bool>[] tasks = CreateTaskArray(10, IsDownloadJPG);
-                    foreach (var t in tasks)
-                        t.Start();
-                    Task.WaitAll(tasks);
-                    foreach (var task in tasks)
-                    {
-                        if (task.Result == true)
-                        {
-                            i++;
-                        }
-                    }
-                    countOfTrying += 10;
-                    IsDownloadJPG();
+                string url = CreateURL();
+                Thread thr = new Thread(new ParameterizedThreadStart(DownloadJPG));
+                thr.Start(url);
+                  
+                    countOfTrying = i; 
                 }
             MessageBox.Show("Photo have been downloaded succes.");
             
@@ -103,16 +95,10 @@ namespace LightshotPhotoParser
             } 
             return url.ToString();
         }
-        private bool IsDownloadJPG()
+      
+        private void  DownloadJPG(object  insertUrl)
         {
-            if (this.DownloadJPG(CreateURL()))
-            {
-                return true;
-            }
-            else { return false; }
-        }
-        private bool DownloadJPG(string url)
-        { 
+            string url = (string)insertUrl;
             try
             {
 
@@ -174,19 +160,18 @@ namespace LightshotPhotoParser
                             }
                             catch (Exception ex)
                             {
-                                return false;
+                                return ;
                             }
                             Monitor.Exit(path); 
-                            return true;
+                            return  ;
                         }
 
                     }
-                }
-                    return false;      
+                } 
             }
             catch(WebException  )
             {
-                return false;
+                return  ;
             }
             
 
